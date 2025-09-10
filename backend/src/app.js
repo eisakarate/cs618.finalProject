@@ -12,6 +12,8 @@ const app = express()
 //make the app use the body parser to parse JSON
 // bodyParser.Json() -> middleware that intercepts the request and parses it to JSON
 app.use(bodyParser.json())
+
+// use the CORS to allow access from other URLs
 app.use(cors())
 //define routes
 postsRouts(app)

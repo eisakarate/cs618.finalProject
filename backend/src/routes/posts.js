@@ -10,14 +10,16 @@ import {
 
 //assign routs to the app
 export function postsRouts(app) {
+  //get request
   app.get('/api/v1/posts', async (req, res) => {
     const { sortBy, sortOrder, author, tag } = req.query
     const options = { sortBy, sortOrder }
     try {
       if (author && tag) {
-        return res
-          .status(400)
-          .json({ error: 'query by either author or tag, not both' })
+        return res.status(400).json({
+          error:
+            'You tried to query by either author and tag.  You can query via author or tag.',
+        })
       } else if (author) {
         return res.json(await listPostsByAuthor(author, options))
       } else if (tag) {
@@ -30,6 +32,7 @@ export function postsRouts(app) {
       return res.status(500).end()
     }
   })
+  //get request
   app.get('/api/v1/posts/:id', async (req, res) => {
     const { id } = req.params
     try {
