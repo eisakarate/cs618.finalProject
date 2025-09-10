@@ -1,0 +1,3 @@
+{
+  "wacth": ["./src", ".env", "package-lock.json"]
+}
