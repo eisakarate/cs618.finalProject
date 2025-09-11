@@ -1,17 +1,13 @@
-import { PostList } from './components/PostList.jsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Blog } from './Blog.jsx'
 
-//use static post list for now
-const posts = [
-  {
-    title: 'Foo',
-    contents: 'Bar',
-    author: 'Foba',
-  },
-  {
-    title: 'Foo2',
-  },
-]
+// create a query client
+const queryClient = new QueryClient()
 
 export function App() {
-  return <PostList posts={posts} />
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Blog />
+    </QueryClientProvider>
+  )
 }
