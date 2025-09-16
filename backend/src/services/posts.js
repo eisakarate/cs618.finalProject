@@ -1,9 +1,14 @@
 import { Post } from '../db/models/post.js'
 
 //Services/post.js performs the CRUD operations
-
-export async function createPost({ title, author, contents, tags }) {
-  const post = new Post({ title, author, contents, tags })
+export async function createPost({
+  title,
+  author,
+  contents,
+  bibliography,
+  tags,
+}) {
+  const post = new Post({ title, author, contents, bibliography, tags })
   return await post.save()
 }
 
@@ -36,11 +41,14 @@ export async function getPostById(postId) {
 }
 
 //update a post
-export async function updatePost(postId, { title, author, content, tags }) {
+export async function updatePost(
+  postId,
+  { title, author, contents, bibliography, tags },
+) {
   return await Post.findOneAndUpdate(
     { _id: postId },
     {
-      $set: { title, author, content, tags },
+      $set: { title, author, contents, bibliography, tags },
     },
     { new: true },
   )

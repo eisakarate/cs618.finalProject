@@ -9,3 +9,14 @@ export const getPosts = async (queryParams) => {
   )
   return await res.json()
 }
+
+//add a second funcion
+export const createPost = async (post) => {
+  //create a POST request, and push the post information the endpoint
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(post),
+  })
+  return await res.json()
+}
