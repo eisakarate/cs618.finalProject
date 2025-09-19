@@ -1,4 +1,5 @@
 name: Deploy Blog Application
+#for CI to Google Cloud Run
 on:
   push:
     branches:
