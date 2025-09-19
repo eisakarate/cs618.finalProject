@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         # use the following node-versions
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [20.x]
     # stesp in the job
     steps:
       # checkout the code
