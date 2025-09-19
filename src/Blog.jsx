@@ -27,7 +27,7 @@ export function Blog() {
   return (
     <div style={{ padding: 8 }}>
       <h1>Welcome to Corgi Blog</h1>
-      <h2>By Potato Dog</h2>
+      <h2>By Potato Dog (a.k.a, pawsome corgi)</h2>
       <CreatePost />
       <br />
       <hr />
