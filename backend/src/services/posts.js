@@ -1,14 +1,18 @@
 import { Post } from '../db/models/post.js'
 
 //Services/post.js performs the CRUD operations
-export async function createPost({
-  title,
-  author,
-  contents,
-  bibliography,
-  tags,
-}) {
-  const post = new Post({ title, author, contents, bibliography, tags })
+export async function createPost(
+  userId,
+  {
+    title,
+    //author, replaced by user-id
+    contents,
+    bibliography,
+    tags,
+  },
+) {
+  //set the author to the object
+  const post = new Post({ title, userId, contents, bibliography, tags })
   return await post.save()
 }
 
@@ -42,19 +46,20 @@ export async function getPostById(postId) {
 
 //update a post
 export async function updatePost(
+  userId,
   postId,
-  { title, author, contents, bibliography, tags },
+  { title, contents, bibliography, tags },
 ) {
   return await Post.findOneAndUpdate(
-    { _id: postId },
+    { _id: postId, author: userId }, //find the post by PostId and UserId
     {
-      $set: { title, author, contents, bibliography, tags },
+      $set: { title, contents, bibliography, tags },
     },
     { new: true },
   )
 }
 
 //delete a post
-export async function deletePost(postId) {
-  return await Post.deleteOne({ _id: postId })
+export async function deletePost(userId, postId) {
+  return await Post.deleteOne({ _id: postId, author: userId }) //post and userid must match
 }
