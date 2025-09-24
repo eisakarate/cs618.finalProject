@@ -11,8 +11,9 @@ export async function createPost(
     tags,
   },
 ) {
+  console.log(`userId: ${userId}`)
   //set the author to the object
-  const post = new Post({ title, userId, contents, bibliography, tags })
+  const post = new Post({ title, author: userId, contents, bibliography, tags })
   return await post.save()
 }
 
