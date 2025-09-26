@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.87.4",
+    "jwt-decode": "^4.0.0",
     "mongodb": "^6.3.0",
     "mongodb-memory-server": "^9.1.1",
     "mongoose": "^8.0.2",

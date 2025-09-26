@@ -1,20 +1,26 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createPost } from '../api/posts.js'
+import { useAuth } from '../contexts/AuthContext'
+import { jwtDecode } from 'jwt-decode'
+import { User } from './User.jsx'
 
 // how to call the Post API?
 //use a mutation (useMutation)
 
 export function CreatePost() {
+  //define authentication state
+  const [token] = useAuth() //get the token, if its there
+
   //define states
   const [title, setTitle] = useState('') //setTitle is an "alias" to "function" that set the state value for title
-  const [author, setAuthor] = useState('')
+  //const [author, setAuthor] = useState('')  //we are going to use the Token
   const [contents, setContents] = useState('')
   const [bibliography, setBibliography] = useState('') //initiialize to empty-string
 
   const queryClient = useQueryClient()
   const createPostMutation = useMutation({
-    mutationFn: () => createPost({ title, author, contents, bibliography }), //call the mutate using State, call the API function
+    mutationFn: () => createPost(token, { title, contents, bibliography }), //call the mutate using State, call the API function
 
     //invalidate the query in the "post"
     //invalidating the Query makes the underlying data "invalid", and causes the component to requery from the database
@@ -30,6 +36,10 @@ export function CreatePost() {
     createPostMutation.mutate() //mutate
   }
 
+  //check for authentication
+  if (!token) return <div>Please log in to create new posts.</div>
+
+  const { sub } = jwtDecode(token) //get the user-id, then nullify the token, then stay on the page
   //prevent
   return (
     <form onSubmit={handleSubmit}>
@@ -47,15 +57,7 @@ export function CreatePost() {
       </div>
       <br />
       <div>
-        <label htmlFor='create-author'>Author: </label>
-        {/* add a field for entering an author */}
-        <input
-          type='text'
-          name='create-author'
-          id='create-author'
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
+        <label htmlFor='create-author'>Author: </label> <User id={sub} />
       </div>
       <br />
       <div>

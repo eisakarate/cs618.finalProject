@@ -1,4 +1,5 @@
 import { Post } from '../db/models/post.js'
+import { User } from '../db/models/user.js'
 
 //Services/post.js performs the CRUD operations
 export async function createPost(
@@ -31,8 +32,13 @@ export async function listAllPosts(options) {
 }
 
 //list posts based on an Author
-export async function listPostsByAuthor(author, options) {
-  return await listPosts({ author }, options)
+export async function listPostsByAuthor(authorUserName, options) {
+  const user = await User.findOne({ username: authorUserName })
+
+  //find a match?
+  if (!user) return []
+
+  return await listPosts({ author: user._id }, options)
 }
 
 //list posts by Tab

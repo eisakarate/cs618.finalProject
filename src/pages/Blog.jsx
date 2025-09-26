@@ -6,6 +6,8 @@ import { PostSorting } from '../components/PostSorting.jsx'
 import { useQuery } from '@tanstack/react-query'
 import { getPosts } from '../api/posts.js'
 
+import { Header } from '../components/header.jsx'
+
 //create state to hold information on the client-side
 import { useState } from 'react' //author filter, sorting, order
 
@@ -26,8 +28,7 @@ export function Blog() {
 
   return (
     <div style={{ padding: 8 }}>
-      <h1>Welcome to Corgi Blog</h1>
-      <h2>By Potato Dog (a.k.a, pawsome corgi)</h2>
+      <Header />
       <CreatePost />
       <br />
       <hr />

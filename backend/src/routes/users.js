@@ -1,4 +1,4 @@
-import { createUser, loginUser } from '../services/users.js'
+import { createUser, loginUser, getUserInfoById } from '../services/users.js'
 export function userRoutes(app) {
   //app.post -> POST request
   app.post('/api/v1/user/signup', async (req, res) => {
@@ -24,5 +24,13 @@ export function userRoutes(app) {
         error: 'login failed, did you enter the correct username/password?',
       })
     }
+  })
+
+  //add route to get ther user name
+  //  authentication is not added here!
+  //    why?  It will be called while user is logging in... I think I may need to update this fopr security later
+  app.get('/api/v1/users/:id', async (req, res) => {
+    const userInfo = await getUserInfoById(req.params.id)
+    return res.status(200).send(userInfo)
   })
 }

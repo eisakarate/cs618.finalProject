@@ -11,11 +11,14 @@ export const getPosts = async (queryParams) => {
 }
 
 //add a second funcion
-export const createPost = async (post) => {
+export const createPost = async (token, post) => {
   //create a POST request, and push the post information the endpoint
   const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `bearer ${token}`, //set the token into the header
+    },
     body: JSON.stringify(post),
   })
   return await res.json()

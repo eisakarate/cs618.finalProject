@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types'
+import { User } from './User'
 
 /*
  *.jsx allows embedding of HTML with JavaScript, sort of like Blazor
  */
-export function Post({ title, contents, author, bibliography }) {
+export function Post({ title, contents, author: userId, bibliography }) {
   return (
     <article>
       <h3>{title}</h3>
       <div>{contents}</div>
-      {author && (
+      {userId && (
         <em>
           <br />
-          Written by <strong>{author}</strong>
+          Written by <User id={userId} />
         </em>
       )}
       <div>
