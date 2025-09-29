@@ -7,6 +7,9 @@ import { User } from './User.jsx'
 export function Header() {
   const [token, setToken] = useAuth() //get the token, if its there
 
+  //set the title so that it no longer reads vite+react
+  document.title = 'Corgi Blog Time!'
+
   //if there is a token, then display the logout, then clearout the token
   if (token) {
     const { sub } = jwtDecode(token) //get the user-id, then nullify the token, then stay on the page
