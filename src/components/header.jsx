@@ -8,7 +8,7 @@ export function Header() {
   const [token, setToken] = useAuth() //get the token, if its there
 
   //set the title so that it no longer reads vite+react
-  document.title = 'Corgi Blog!'
+  document.title = 'Corgi Blog Time!'
 
   //if there is a token, then display the logout, then clearout the token
   if (token) {
@@ -28,7 +28,7 @@ export function Header() {
   //display the default when there is no token
   return (
     <div>
-      <h1>Welcome to Corgi Blog</h1>
+      <h1>Welcome to Corgi Blog!</h1>
       <h2>By Potato Dog (a.k.a, pawsome corgi)</h2>
       <Link to='/login'>Log In</Link> | <Link to='/signup'>Sign Up</Link>
       <hr />
