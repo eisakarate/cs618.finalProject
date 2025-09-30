@@ -1,12 +1,43 @@
-# React + Vite
+# CS 618 - Course Project: Real-Time Receipe Sharing App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🍽️ CS 618 Course Project: Real-Time Recipe Sharing App
 
-Currently, two official plugins are available:
+In this course-long project, you will build a full-stack recipe sharing application using the MERN stack (MongoDB, Express, React, Node.js). The app will allow users to sign up, post their favorite recipes with ingredients and images, like others’ recipes, and get real-time updates when new recipes are added.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+While the technical foundation is similar to a blog platform, your app will evolve into a real-time, interactive recipe experience — showcasing your understanding of modern web development, data modeling, server communication, and user experience.
 
-## Expanding the ESLint configuration
+You’ll complete the project in three milestones, each adding new features and complexity. You will submit the milestones like you submit assignments.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🎯 Project Goals
+By the end of the course, you will:
+
+- Design and implement a functional MERN stack application
+- Create and manage user-authenticated content
+- Use data relationships and aggregation to implement social features
+- Apply WebSocket-based communication for real-time updates
+- Demonstrate testing, deployment, and modern development practices
+
+🧱 Project Structure and Milestones
+
+✅ Milestone 1: Recipe Posting
+Build the foundation of your app.
+
+- Users can sign up and log in
+- Each user can create, view, and manage their own recipes
+- A recipe contains a title, ingredient list, and an image (via URL)
+- Focus on core CRUD functionality, form handling, and schema design
+
+✅ Milestone 2: Likes & Popularity
+Add interactivity and analytics.
+
+- Logged-in users can like recipes
+- Each recipe displays its like count
+- Sort or filter recipes by popularity
+- Use data aggregation to calculate and display top recipes
+
+✅ Milestone 3: Real-Time Enhancements
+Make your app dynamic and engaging.
+
+- When a new recipe is added, all users receive a real-time popup notification
+- Notification includes the title and a link to view the new recipe
+- Integrate WebSocket communication using Socket.io
