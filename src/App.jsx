@@ -1,11 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Blog } from './pages/Blog.jsx'
+import { RecipeRoot } from './pages/RecipeRoot.jsx'
 import { Signup } from './pages/Singup.jsx'
 import { Login } from './pages/login.jsx'
 import { AuthContextProvider } from './contexts/AuthContext.jsx'
 
 //import router
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+//bootstrrap
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 // create a query client
 const queryClient = new QueryClient()
@@ -14,7 +17,7 @@ const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {
     path: '/', //root of the application
-    element: <Blog />, //got othe "blog" component
+    element: <RecipeRoot />, //got othe "blog" component
   },
   {
     path: `/signup`, //set the route

@@ -3,6 +3,16 @@ import { jwtDecode } from 'jwt-decode'
 import { useAuth } from '../contexts/AuthContext'
 import { User } from './User.jsx'
 
+import {
+  Navbar,
+  Container,
+  NavbarBrand,
+  Form,
+  Row,
+  Col,
+  FormText,
+} from 'react-bootstrap'
+
 //setup a header link
 export function Header() {
   const [token, setToken] = useAuth() //get the token, if its there
@@ -14,24 +24,42 @@ export function Header() {
   if (token) {
     const { sub } = jwtDecode(token) //get the user-id, then nullify the token, then stay on the page
     return (
-      <div>
-        <h1>Welcome to Corgi Blog</h1>
-        <h2>By Potato Dog (a.k.a, pawsome corgi)</h2>
-        Logged in as <User id={sub} />
-        &nbsp;|&nbsp;
-        <button onClick={() => setToken(null)}>Logout</button>
-        <hr />
-      </div>
+      <Navbar expand='lg' className='bg-body-tertiary'>
+        <Container>
+          <NavbarBrand>Welcome to Corgi Recipe</NavbarBrand>
+          <Form inline>
+            <Row>
+              <Col xs='auto'>
+                <FormText>
+                  Logged in as <User id={sub} />
+                </FormText>
+              </Col>
+              <Col xs='auto'>
+                <button onClick={() => setToken(null)}>Logout</button>
+              </Col>
+            </Row>
+          </Form>
+        </Container>
+      </Navbar>
     )
   }
 
   //display the default when there is no token
   return (
-    <div>
-      <h1>Welcome to Corgi Blog!</h1>
-      <h2>By Potato Dog (a.k.a, pawsome corgi)</h2>
-      <Link to='/login'>Log In</Link> | <Link to='/signup'>Sign Up</Link>
-      <hr />
-    </div>
+    <Navbar expand='lg' className='bg-body-tertiary'>
+      <Container>
+        <NavbarBrand>Welcome to Corgi Recipe</NavbarBrand>
+        <Form inline>
+          <Row>
+            <Col xs='auto'>
+              <Link to='/login'>Log In</Link>
+            </Col>
+            <Col xs='auto'>
+              <Link to='/signup'>Sign Up</Link>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
+    </Navbar>
   )
 }

@@ -12,7 +12,8 @@ const recipeSchema = new Schema(
     title: { type: String, required: true },
     author: { type: Schema.Types.ObjectId, ref: 'user', required: true },
     description: String,
-    ingredientsList: [ingredientSchema],
+    ingredientsListArray: [ingredientSchema], //for future update
+    ingredientsList: [String],
     imageUrl: String,
   },
   //add timestamps (create timestamp and update timestamp)

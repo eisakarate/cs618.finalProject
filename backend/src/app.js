@@ -4,7 +4,7 @@ import express from 'express'
 //fix for Refused to connect  Content Security Policy directive: "connect-src 'self'
 //import helmet from 'helmet'
 
-import { postsRouts } from './routes/posts.js'
+import { recipesRouts } from './routes/recipes.js'
 import { userRoutes } from './routes/users.js'
 
 import bodyParser from 'body-parser'
@@ -17,29 +17,10 @@ const app = express()
 // bodyParser.Json() -> middleware that intercepts the request and parses it to JSON
 app.use(bodyParser.json())
 
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: {
-//       directives: {
-//         defaultSrc: ["'self'"],
-//         connectSrc: [
-//           "'unsafe-inline'",
-//           "'self'",
-//           'https://zany-space-eureka-67rqv5jgj67hr4jw-3000.app.github.dev',
-//           'https://zany-space-eureka-67rqv5jgj67hr4jw-3000.app.github.dev/',
-//           'https://zany-space-eureka-67rqv5jgj67hr4jw-3000.app.github.dev/api/v1/',
-//           'http://localhost:3000/',
-//           'http://127.0.0.1:3000/',
-//         ],
-//       },
-//     },
-//   }),
-// )
-
 // use the CORS to allow access from other URLs
 app.use(cors())
 //define routes
-postsRouts(app)
+recipesRouts(app)
 userRoutes(app)
 
 //define a route (root)
@@ -48,8 +29,8 @@ app.get('/', (req, res) => {
 })
 
 //define addtional routes
-app.get('/posts', (req, res) => {
-  res.send('Posts')
+app.get('/recipes', (req, res) => {
+  res.send('recipes')
 })
 
 //make it public

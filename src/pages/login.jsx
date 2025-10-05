@@ -5,6 +5,19 @@ import { login } from '../api/users.js'
 
 import { useAuth } from '../contexts/AuthContext.jsx'
 
+//bootstrap
+import {
+  Container,
+  Form,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  Row,
+  Col,
+  Navbar,
+  NavbarBrand,
+} from 'react-bootstrap'
+
 export function Login() {
   const [, setToken] = useAuth()
   const [username, setUsername] = useState('')
@@ -24,38 +37,55 @@ export function Login() {
     loginMutation.mutate()
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <Link to='/'>Back to main page</Link>
-      <hr />
-      <div>
-        <label htmlFor='create-username'>Username: </label>
+    <Container fluid>
+      <Navbar expand='lg' className='bg-body-tertiary'>
+        <Container>
+          <NavbarBrand>Welcome to Corgi Recipe :: Welcome Back!</NavbarBrand>
+          <Form inline>
+            <Row>
+              <Col xs='auto'></Col>
+              <Col xs='auto'>
+                <Link to='/'>Back to main page</Link>
+              </Col>
+            </Row>
+          </Form>
+        </Container>
+      </Navbar>
+      <Row className='justify-content-md-center mt-5'>
+        <Col xs={12} md={6}>
+          <form onSubmit={handleSubmit}>
+            <FormGroup>
+              <FormLabel htmlFor='create-username'>Username: </FormLabel>
 
-        <input
-          type='text'
-          name='create-username'
-          id='create-username'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <br />
-      <div>
-        <label htmlFor='create-password'>Password: </label>
+              <FormControl
+                type='text'
+                name='create-username'
+                id='create-username'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </FormGroup>
+            <br />
+            <FormGroup>
+              <FormLabel htmlFor='create-password'>Password: </FormLabel>
 
-        <input
-          type='password'
-          name='create-password'
-          id='create-password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <br />
-      <input
-        type='submit'
-        value={loginMutation.isPending ? 'Logging in...' : 'Login '}
-        disabled={!username || !password || loginMutation.isPending}
-      />
-    </form>
+              <FormControl
+                type='password'
+                name='create-password'
+                id='create-password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </FormGroup>
+            <br />
+            <FormControl
+              type='submit'
+              value={loginMutation.isPending ? 'Logging in...' : 'Login '}
+              disabled={!username || !password || loginMutation.isPending}
+            />
+          </form>
+        </Col>
+      </Row>
+    </Container>
   )
 }
