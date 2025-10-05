@@ -56,17 +56,18 @@ export async function listRecipeByIngredient(tags, options) {
 
 //get Recipes by an Id
 export async function GetRecipeById(recipeId) {
+  console.log(`GetRecipeById: ${recipeId}`)
   return await Recipe.findById(recipeId) //using Mongoose
 }
 
 //update a Recipes
 export async function updateRecipe(
   userId,
-  recipeId,
-  { title, description, incgredientList, imageUrl },
+  { __id, title, description, incgredientList, imageUrl },
 ) {
+  console.log(`Updating: userId: ${userId}, title: ${title}, recipeId: ${__id}`)
   return await Recipe.findOneAndUpdate(
-    { _id: recipeId, author: userId }, //find the recipe by recipeId and UserId
+    { _id: __id, author: userId }, //find the recipe by recipeId and UserId
     {
       $set: { title, description, incgredientList, imageUrl },
     },

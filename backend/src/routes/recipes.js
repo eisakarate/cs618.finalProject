@@ -14,7 +14,7 @@ import { requireAuth } from '../middleware/jwt.js'
 export function recipesRouts(app) {
   //get request
   app.get('/api/v1/recipes', async (req, res) => {
-    const { sortBy, sortOrder, author, ingredient } = req.query
+    const { sortBy, sortOrder, author, ingredient, id } = req.query
     const options = { sortBy, sortOrder }
     try {
       if (author && ingredient) {
@@ -28,6 +28,11 @@ export function recipesRouts(app) {
       } else if (ingredient) {
         console.log(`listRecipeByIngredient`)
         return res.json(await listRecipeByIngredient(ingredient, options))
+      } else if (id) {
+        console.log(
+          `GetRecipeById: passed ${id} from ${JSON.stringify(req.query)}}`,
+        )
+        return res.json(await GetRecipeById(id))
       } else {
         return res.json(await listAllRecipes(options))
       }
@@ -36,18 +41,20 @@ export function recipesRouts(app) {
       return res.status(500).end()
     }
   })
-  //get request
-  app.get('/api/v1/recipes/:id', async (req, res) => {
-    const { id } = req.params
-    try {
-      const recipe = await GetRecipeById(id)
-      if (recipe === null) return res.status(404).end()
-      return res.json(recipe)
-    } catch (err) {
-      console.error('error getting recipe', err)
-      return res.status(500).end()
-    }
-  })
+  // //get request
+  // app.get('/api/v1/recipesEdit/:id', async (req, res) => {
+  //   const { id } = req.params
+  //   try {
+  //     console.log(`get request: ${id}`)
+
+  //     const recipe = await GetRecipeById(id)
+  //     if (recipe === null) return res.status(404).end()
+  //     return res.json(recipe)
+  //   } catch (err) {
+  //     console.error('error getting recipe', err)
+  //     return res.status(500).end()
+  //   }
+  // })
 
   //post -> wholesale replace, create a recipe
   app.post('/api/v1/recipes', requireAuth, async (req, res) => {
@@ -62,9 +69,10 @@ export function recipesRouts(app) {
   })
 
   //update/patch
-  app.patch('/api/v1/recipes/:id', requireAuth, async (req, res) => {
+  app.patch('/api/v1/recipes/', requireAuth, async (req, res) => {
+    console.log('Patching, ie., Update')
     try {
-      const recipe = await updateRecipe(req.auth.sub, req.params.id, req.body)
+      const recipe = await updateRecipe(req.auth.sub, req.body)
       return res.json(recipe)
     } catch (err) {
       console.error('error updating recipe', err)

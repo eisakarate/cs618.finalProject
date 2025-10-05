@@ -1,8 +1,10 @@
 //get Recipes from the webAPI
 export const getRecipes = async (queryParams) => {
-  console.log(`queryParams:${JSON.stringify(queryParams)}`)
+  console.log(`getRecipes: queryParams:${JSON.stringify(queryParams)}`)
   console.log(
-    `Sending request to: ${import.meta.env.VITE_BACKEND_URL}/recipes?`,
+    `getRecipes: Sending request to: ${
+      import.meta.env.VITE_BACKEND_URL
+    }/recipes?`,
   )
   //construct a route
   const res = await fetch(
@@ -29,39 +31,36 @@ export const createRecipe = async (token, recipe) => {
 
 //add a second funcion
 export const updateRecipe = async (token, recipe) => {
-  console.log(`Recipe: ${JSON.stringify(recipe)}`)
+  console.log(`Recipe to update: ${JSON.stringify(recipe)}`)
   //create a Recipe request, and push the Recipe information the endpoint
-  const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/recipes/${recipe._id}`,
-    {
-      method: 'UPDATE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${token}`, //set the token into the header
-      },
-      body: JSON.stringify(recipe),
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/recipes/`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `bearer ${token}`, //set the token into the header
     },
-  )
+    body: JSON.stringify(recipe),
+  })
   return await res.json()
 }
 
-//
-export const getRecipe = async (token, queryParams) => {
-  console.log(`queryParams:${JSON.stringify(queryParams)}`)
-  console.log(
-    `Sending request to: ${import.meta.env.VITE_BACKEND_URL}/recipes?`,
-  )
-  //construct a route
-  const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/recipes?` +
-      new URLSearchParams(queryParams),
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `bearer ${token}`, //set the token into the header
-      },
-    },
-  )
-  return await res.json()
-}
+// //
+// export const getRecipe = async (token, queryParams) => {
+//   console.log(`Get Search queryParams:${JSON.stringify(queryParams)}`)
+//   console.log(
+//     `Sending get data request to: ${import.meta.env.VITE_BACKEND_URL}/recipes`,
+//   )
+//   //construct a route
+//   const res = await fetch(
+//     `${import.meta.env.VITE_BACKEND_URL}/recipes` +
+//       new URLSearchParams(queryParams),
+//     {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `bearer ${token}`, //set the token into the header
+//       },
+//     },
+//   )
+//   return await res.json()
+// }

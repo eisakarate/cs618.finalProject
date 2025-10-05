@@ -58,7 +58,7 @@ export function Recipe({
               <ListGroupItem key={index}>{ingredientsList}</ListGroupItem>
             ))}
           </ListGroup>
-          {canEdit && <Link to={`/edit/${_id}`}>Edit</Link>}
+          {canEdit && <Link to={`/edit?id=${_id}`}>Edit</Link>}
         </CardText>
       </CardBody>
     </Card>
