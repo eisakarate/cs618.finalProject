@@ -50,7 +50,6 @@ export function RecipeRoot() {
         onOrderChange={(orderValue) => setSortOrder(orderValue)}
       />
       <hr />
-      {/* Recipe list */}
       <RecipeList recipes={recipesData} />
     </div>
   )

@@ -4,6 +4,8 @@ import { Signup } from './pages/Singup.jsx'
 import { Login } from './pages/login.jsx'
 import { AuthContextProvider } from './contexts/AuthContext.jsx'
 
+import { RecipeEdit } from './pages/RecipeEdit.jsx'
+
 //import router
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -18,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/', //root of the application
     element: <RecipeRoot />, //got othe "blog" component
+  },
+  {
+    path: `/edit/:id?`,
+    element: <RecipeEdit />,
   },
   {
     path: `/signup`, //set the route

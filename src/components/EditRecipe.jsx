@@ -2,9 +2,6 @@ import PropTypes from 'prop-types'
 import { User } from './User'
 import { Link } from 'react-router-dom'
 
-import { useAuth } from '../contexts/AuthContext'
-import { jwtDecode } from 'jwt-decode'
-
 import {
   Card,
   CardBody,
@@ -17,7 +14,7 @@ import {
 /*
  *.jsx allows embedding of HTML with JavaScript, sort of like Blazor
  */
-export function Recipe({
+export function EditRecipe({
   title,
   description,
   author: userId,
@@ -26,24 +23,10 @@ export function Recipe({
   imageUrl,
   _id,
 }) {
-  const [token] = useAuth() //get the token, if its there
-  let { sub } = ''
-
-  let canEdit = false
-  if (token) {
-    try {
-      sub = jwtDecode(token) //get the user-id, then nullify the token, then stay on the page
-
-      canEdit = token != null && sub != null && sub.sub == userId
-      console.log(`Got Sub: ${sub.sub} - canEdit: ${canEdit}`)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   //console.log(`Got to make thing: ${ingredientsListArray}`)
   return (
     <Card style={{ width: '18rem' }}>
+      foo: {imageUrl}
       <Card.Img variant='top' src={imageUrl} />
       <CardBody>
         <CardTitle>
@@ -58,14 +41,14 @@ export function Recipe({
               <ListGroupItem key={index}>{ingredientsList}</ListGroupItem>
             ))}
           </ListGroup>
-          {canEdit && <Link to={`/edit/${_id}`}>Edit</Link>}
+          <Link to={`/recipe/${_id}`}>Edit</Link>
         </CardText>
       </CardBody>
     </Card>
   )
 }
 
-Recipe.propTypes = {
+EditRecipe.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   author: PropTypes.string,
