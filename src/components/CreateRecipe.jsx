@@ -89,7 +89,8 @@ export function CreateRecipe() {
             <FormGroup>
               <FormLabel htmlFor='blog-content'>Ingredients List: </FormLabel>
               {/* add a field for entering a content? */}
-              <textarea
+              <FormControl
+                as='textarea'
                 name='blog-content'
                 id='blog-content'
                 value={ingredientsList}

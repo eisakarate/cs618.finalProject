@@ -18,13 +18,15 @@ export function RecipeRoot() {
   const [sortOrder, setSortOrder] = useState('descending')
 
   //define a query
-  const RecipeQuery = useQuery({
-    queryKey: ['Recipes', { author, sortBy, sortOrder }],
+  const recipeQuery = useQuery({
+    queryKey: ['recipes', { author, sortBy, sortOrder }],
     queryFn: () => getRecipes({ author, sortBy, sortOrder }),
   })
 
   //get data
-  const Recipes = RecipeQuery.data ?? [] //get the result
+  const recipesData = recipeQuery.data ?? [] //get the result
+
+  //console.log(`Result is: ${JSON.stringify(recipesData)}`)
 
   return (
     <div style={{ padding: 8 }}>
@@ -49,7 +51,7 @@ export function RecipeRoot() {
       />
       <hr />
       {/* Recipe list */}
-      <RecipeList Recipes={Recipes} />
+      <RecipeList recipes={recipesData} />
     </div>
   )
 }

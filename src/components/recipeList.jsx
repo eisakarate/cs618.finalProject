@@ -8,6 +8,7 @@ import { Recipe } from './recipe.jsx'
 //      applies members of the 'post' to corresponding memers of Post prototype
 
 export function RecipeList({ recipes = [] }) {
+  console.log(JSON.stringify(recipes))
   return (
     <div>
       {recipes.map((recipe) => (

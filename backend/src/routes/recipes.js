@@ -23,8 +23,10 @@ export function recipesRouts(app) {
             'You tried to query by either author and tag.  You can query via author or tag.',
         })
       } else if (author) {
+        console.log(`listRecipesByAuthor`)
         return res.json(await listRecipesByAuthor(author, options))
       } else if (ingredient) {
+        console.log(`listRecipeByIngredient`)
         return res.json(await listRecipeByIngredient(ingredient, options))
       } else {
         return res.json(await listAllRecipes(options))
@@ -50,6 +52,7 @@ export function recipesRouts(app) {
   //post -> wholesale replace, create a recipe
   app.post('/api/v1/recipes', requireAuth, async (req, res) => {
     try {
+      console.log(`Create: ${JSON.stringify(req.body)}`)
       const recipe = await createRecipe(req.auth.sub, req.body)
       return res.json(recipe)
     } catch (err) {

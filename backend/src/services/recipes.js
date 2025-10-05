@@ -9,17 +9,19 @@ export async function createRecipe(
     //author, replaced by user-id
     description,
     ingredientsList,
-    imgeUrl,
+    imageUrl,
   },
 ) {
-  console.log(`userId: ${userId}`)
+  console.log(
+    `userId: ${userId}, title: ${title}, description: ${description}, imgeUrl:${imageUrl}`,
+  )
   //set the author to the object
   const recipe = new Recipe({
     title,
     author: userId,
     description,
     ingredientsList,
-    imgeUrl,
+    imageUrl,
   })
   return await recipe.save()
 }
