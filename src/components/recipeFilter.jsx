@@ -1,20 +1,22 @@
 import PropTypes from 'prop-types'
+import { Col, FormControl } from 'react-bootstrap'
 
 export function RecipeFilter({ field, value, onChange }) {
   return (
-    <div>
+    <Col mb={2}>
       {/* field is the paramter, a control/or property? */}
       {/* create a label for a filter control */}
-      <label htmlFor={`filter-${field}`}>{field}: </label>
+      {/* <FormLabel htmlFor={`filter-${field}`}>{field}: </FormLabel> */}
       {/* Create a textbox to specify a filter */}
-      <input
+      <FormControl
+        placeholder={`Filter by ${field}`}
         type='text'
         name={`filter-${field}`}
         id={`filter-${field}`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-    </div>
+    </Col>
   )
 }
 

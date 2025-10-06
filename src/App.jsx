@@ -11,6 +11,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 //bootstrrap
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { RecipeCreate } from './pages/RecipeCreate.jsx'
 
 // create a query client
 const queryClient = new QueryClient()
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: `/edit/:id?`,
     element: <RecipeEdit />,
+  },
+  {
+    path: `/add/?`,
+    element: <RecipeCreate />,
   },
   {
     path: `/signup`, //set the route

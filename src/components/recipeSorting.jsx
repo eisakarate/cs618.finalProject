@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { Col } from 'react-bootstrap'
 
 export function RecipeSorting({
   fields = [],
@@ -8,7 +9,7 @@ export function RecipeSorting({
   onOrderChange,
 }) {
   return (
-    <div>
+    <Col>
       <label htmlFor='sortBy'>Sort By: </label>
       <select
         name='sortBy'
@@ -33,7 +34,7 @@ export function RecipeSorting({
         <option value={'ascending'}>ascending</option>
         <option value={'descending'}>descending</option>
       </select>
-    </div>
+    </Col>
   )
 }
 

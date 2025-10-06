@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { jwtDecode } from 'jwt-decode'
 
+import { DeleteRecipe } from './DeleteRecipe'
+
 import {
+  Row,
+  Col,
   Card,
   CardBody,
   CardText,
@@ -41,27 +45,43 @@ export function Recipe({
     }
   }
 
+  const listGroupSplit = ingredientsList[0].split('\n')
   //console.log(`Got to make thing: ${ingredientsListArray}`)
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant='top' src={imageUrl} />
-      <CardBody>
-        <CardTitle>
-          {title} by <User id={userId} />
-        </CardTitle>
-        <CardText>
-          Reipe Description: {description}
-          <br />
-          Ingredients:
+    <Col sm>
+      <Card style={{ width: '18rem' }}>
+        <Card.Img variant='top' src={imageUrl} />
+        <CardBody>
+          <CardTitle>
+            {title} by <User id={userId} />
+          </CardTitle>
+          <CardText>
+            Recipe Description: {description}
+            <br />
+            Ingredients:
+          </CardText>
           <ListGroup>
-            {ingredientsList.map((ingredientsList, index) => (
+            {listGroupSplit.map((ingredientsList, index) => (
               <ListGroupItem key={index}>{ingredientsList}</ListGroupItem>
             ))}
           </ListGroup>
-          {canEdit && <Link to={`/edit?id=${_id}`}>Edit</Link>}
-        </CardText>
-      </CardBody>
-    </Card>
+          <Row>
+            {canEdit && (
+              <Col>
+                <Link className='btn btn-link' to={`/edit?id=${_id}`}>
+                  Edit
+                </Link>
+              </Col>
+            )}
+            {canEdit && (
+              <Col>
+                <DeleteRecipe _id={_id} />
+              </Col>
+            )}
+          </Row>
+        </CardBody>
+      </Card>
+    </Col>
   )
 }
 

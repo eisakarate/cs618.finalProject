@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Recipe } from './recipe.jsx'
+import { Container, Row } from 'react-bootstrap'
 
 //Fragment -> group it, sort of like a DIV?
 //.map -> creates a new array by applyig a provided function to each element of an existing array
@@ -10,14 +11,15 @@ import { Recipe } from './recipe.jsx'
 export function RecipeList({ recipes = [] }) {
   console.log(JSON.stringify(recipes))
   return (
-    <div>
-      {recipes.map((recipe) => (
-        <Fragment key={recipe._id}>
-          <Recipe {...recipe} />
-          <hr />
-        </Fragment>
-      ))}
-    </div>
+    <Container>
+      <Row>
+        {recipes.map((recipe) => (
+          <Fragment key={recipe._id}>
+            <Recipe {...recipe} />
+          </Fragment>
+        ))}
+      </Row>
+    </Container>
   )
 }
 

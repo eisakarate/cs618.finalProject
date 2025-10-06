@@ -1,7 +1,3 @@
-// import { RecipeList } from '../components/recipeList.jsx'
-// import { CreateRecipe } from '../components/CreateRecipe.jsx'
-// import { RecipeFilter } from '../components/recipeFilter.jsx'
-// import { RecipeSorting } from '../components/recipeSorting.jsx'
 import { useState } from 'react'
 import { updateRecipe } from '../api/recipes.js'
 
@@ -74,11 +70,19 @@ export function EditRecipe() {
   console.log(`Result for edit is: ${JSON.stringify(recipesData)}`)
 
   const [title, setTitle] = useState(recipesData.title) //setTitle is an "alias" to "function" that set the state value for title
-  const [description, setDescription] = useState(recipesData.description)
+  const [description, setDescription] = useState(
+    typeof recipesData.description === 'undefined'
+      ? ''
+      : recipesData.description,
+  )
   const [ingredientsList, setIngredientsList] = useState(
-    recipesData.ingredientsList,
+    typeof recipesData.ingredientsList === 'undefined'
+      ? ''
+      : recipesData.ingredientsList,
   ) //initiialize to empty-string
-  const [imageUrl, setImageUrl] = useState(recipesData.imageUrl) //initiialize to empty-string
+  const [imageUrl, setImageUrl] = useState(
+    typeof recipesData.imageUrl === 'undefined' ? '' : recipesData.imageUrl,
+  ) //initiialize to empty-string
 
   if (token)
     return (
@@ -122,14 +126,14 @@ export function EditRecipe() {
                 </FormGroup>
                 <br />
                 <FormGroup>
-                  <FormLabel htmlFor='blog-content'>
+                  <FormLabel htmlFor='ingredient_list'>
                     Ingredients List:{' '}
                   </FormLabel>
                   {/* add a field for entering a content? */}
                   <FormControl
                     as='textarea'
-                    name='blog-content'
-                    id='blog-content'
+                    name='ingredient_list'
+                    id='ingredient_list'
                     value={ingredientsList}
                     onChange={(e) => setIngredientsList(e.target.value)}
                   />

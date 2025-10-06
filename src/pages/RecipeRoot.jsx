@@ -1,5 +1,4 @@
 import { RecipeList } from '../components/recipeList.jsx'
-import { CreateRecipe } from '../components/CreateRecipe.jsx'
 import { RecipeFilter } from '../components/recipeFilter.jsx'
 import { RecipeSorting } from '../components/recipeSorting.jsx'
 
@@ -10,17 +9,25 @@ import { Header } from '../components/header.jsx'
 
 //create state to hold information on the client-side
 import { useState } from 'react' //author filter, sorting, order
+import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+
+import { useAuth } from '../contexts/AuthContext'
 
 export function RecipeRoot() {
+  const [token] = useAuth() //get the token, if its there
+
   //add states
   const [author, setAuthor] = useState('')
+  //const [title, setTitle] = useState('')
+  const title = ''
   const [sortBy, setSortBy] = useState('createdAt')
   const [sortOrder, setSortOrder] = useState('descending')
 
   //define a query
   const recipeQuery = useQuery({
-    queryKey: ['recipes', { author, sortBy, sortOrder }],
-    queryFn: () => getRecipes({ author, sortBy, sortOrder }),
+    queryKey: ['recipes', { author, title, sortBy, sortOrder }],
+    queryFn: () => getRecipes({ author, title, sortBy, sortOrder }),
   })
 
   //get data
@@ -31,24 +38,30 @@ export function RecipeRoot() {
   return (
     <div style={{ padding: 8 }}>
       <Header />
-      <CreateRecipe />
-      <br />
       <hr />
-      Filter by:
-      {/* set the value to the current state (author) and set the onChange event to set the author value*/}
-      <RecipeFilter
-        field='author'
-        value={author}
-        onChange={(value) => setAuthor(value)}
-      />
-      <br />
-      <RecipeSorting
-        fields={['createdAt', 'updatedAt']}
-        value={sortBy}
-        onChange={(value) => setSortBy(value)}
-        orderValue={sortOrder}
-        onOrderChange={(orderValue) => setSortOrder(orderValue)}
-      />
+      <Container>
+        {/* set the value to the current state (author) and set the onChange event to set the author value*/}
+        {/* <RecipeFilter
+          field='Title'
+          value={title}
+          onChange={(value) => setTitle(value)}
+        /> */}
+        <Row>
+          <RecipeFilter
+            field='Author'
+            value={author}
+            onChange={(value) => setAuthor(value)}
+          />
+          <RecipeSorting
+            fields={['createdAt', 'updatedAt']}
+            value={sortBy}
+            onChange={(value) => setSortBy(value)}
+            orderValue={sortOrder}
+            onOrderChange={(orderValue) => setSortOrder(orderValue)}
+          />
+          <Col>{token != null && <Link to='/add'>Add a New Recipe</Link>}</Col>
+        </Row>
+      </Container>
       <hr />
       <RecipeList recipes={recipesData} />
     </div>

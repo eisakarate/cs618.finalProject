@@ -44,23 +44,18 @@ export const updateRecipe = async (token, recipe) => {
   return await res.json()
 }
 
-// //
-// export const getRecipe = async (token, queryParams) => {
-//   console.log(`Get Search queryParams:${JSON.stringify(queryParams)}`)
-//   console.log(
-//     `Sending get data request to: ${import.meta.env.VITE_BACKEND_URL}/recipes`,
-//   )
-//   //construct a route
-//   const res = await fetch(
-//     `${import.meta.env.VITE_BACKEND_URL}/recipes` +
-//       new URLSearchParams(queryParams),
-//     {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `bearer ${token}`, //set the token into the header
-//       },
-//     },
-//   )
-//   return await res.json()
-// }
+export const deleteRecipe = async (token, recipeId) => {
+  console.log(`Recipe to delete: ${recipeId}`)
+  //create a Recipe request, and push the Recipe information the endpoint
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/recipes/${recipeId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `bearer ${token}`, //set the token into the header
+      },
+    },
+  )
+  return await res.json()
+}
