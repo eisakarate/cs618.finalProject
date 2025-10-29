@@ -7,6 +7,8 @@ import { jwtDecode } from 'jwt-decode'
 
 import { DeleteRecipe } from './DeleteRecipe'
 
+import { RecipeStats } from './receipeStats.jsx'
+
 import {
   Row,
   Col,
@@ -65,6 +67,13 @@ export function Recipe({
               <ListGroupItem key={index}>{ingredientsList}</ListGroupItem>
             ))}
           </ListGroup>
+          <Row>
+            <Col>
+              <div>
+                <RecipeStats recipeId={_id}></RecipeStats>
+              </div>
+            </Col>
+          </Row>
           <Row>
             {canEdit && (
               <Col>

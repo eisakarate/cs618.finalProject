@@ -51,3 +51,7 @@ export async function getUserInfoById(userId) {
     return { username: userId }
   }
 }
+
+export async function GetUserById(userId) {
+  return await User.findById(userId)
+}

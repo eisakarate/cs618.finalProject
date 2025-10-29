@@ -6,7 +6,7 @@ const ingredientSchema = new Schema({
   measurement: String,
 })
 
-//define the schema
+//define the schema for receipes
 const recipeSchema = new Schema(
   {
     title: { type: String, required: true },
@@ -15,6 +15,7 @@ const recipeSchema = new Schema(
     ingredientsListArray: [ingredientSchema], //for future update
     ingredientsList: [String],
     imageUrl: String,
+    likeCount: Number,
   },
   //add timestamps (create timestamp and update timestamp)
   { timestamps: true },
