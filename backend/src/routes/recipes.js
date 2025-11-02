@@ -6,6 +6,7 @@ import {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  topThreeRecipes,
 } from '../services/recipes.js'
 
 import { requireAuth } from '../middleware/jwt.js'
@@ -41,20 +42,11 @@ export function recipesRouts(app) {
       return res.status(500).end()
     }
   })
-  // //get request
-  // app.get('/api/v1/recipesEdit/:id', async (req, res) => {
-  //   const { id } = req.params
-  //   try {
-  //     console.log(`get request: ${id}`)
 
-  //     const recipe = await GetRecipeById(id)
-  //     if (recipe === null) return res.status(404).end()
-  //     return res.json(recipe)
-  //   } catch (err) {
-  //     console.error('error getting recipe', err)
-  //     return res.status(500).end()
-  //   }
-  // })
+  app.get('/api/v1/topRecipes', async (req, res) => {
+    console.log(`topThreeRecipes called`)
+    return res.json(await topThreeRecipes())
+  })
 
   //post -> wholesale replace, create a recipe
   app.post('/api/v1/recipes', requireAuth, async (req, res) => {

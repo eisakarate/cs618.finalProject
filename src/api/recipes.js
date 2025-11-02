@@ -14,6 +14,13 @@ export const getRecipes = async (queryParams) => {
   return await res.json()
 }
 
+export const top3Recipes = async () => {
+  //construct a route
+  console.log('top3Recipes Called...')
+  const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/topRecipes`)
+  return await res.json()
+}
+
 //add a second funcion
 export const createRecipe = async (token, recipe) => {
   console.log(`Recipe: ${JSON.stringify(recipe)}`)

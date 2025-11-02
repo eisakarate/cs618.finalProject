@@ -3,15 +3,20 @@ import { GetRecipeById } from '../services/recipes.js'
 import { GetUserById } from '../services/users.js'
 
 export function eventRoutes(app) {
+  //add "like" addition event
   app.post('/api/v1/events', async (req, res) => {
     try {
       const { recipeId, userId } = req.body
+
+      console.log(`Event Reg: ${recipeId}, user: ${userId}`)
+
       const post = await GetRecipeById(recipeId)
       const user = await GetUserById(userId)
 
       if (post === null) return res.status(400).end()
       if (user === null) return res.status(400).end()
 
+      console.log(`Go trackLikeEvent`)
       const event = await trackLikeEvent({ recipeId, userId })
 
       return res.json({ recipeId: event.recipe._id })
@@ -27,7 +32,7 @@ export function eventRoutes(app) {
       const recipe = await GetRecipeById(recipeId)
       if (recipe === null) return res.status(400).end()
       {
-        console.log(`counting likes for: ${recipeId}`)
+        console.log(`totalLikes: counting likes for: ${recipeId}`)
       }
       const stats = await getTotalLikes(recipe._id)
       return res.json(stats)

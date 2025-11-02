@@ -6,14 +6,26 @@ export async function trackLikeEvent({
   userId,
   date = Date.now(), //default
 }) {
-  //add iff ithe user hasn't liked the recipe
-  //todo
+  //add iff the user hasn't liked the recipe
+  console.log(`trackLikeEvent: (${recipeId}).(${userId})`)
+  const cntMatch = await LikeEvent.countDocuments({
+    recipe: recipeId,
+    user: userId,
+  })
+  console.log(`trackLikeEvent Precheck: ${cntMatch}`)
 
-  const event = new LikeEvent({ recipe: recipeId, user: userId, date })
-  return await event.save()
+  if (cntMatch < 1) {
+    console.log('trackLikeEvent: Liking event')
+    const event = new LikeEvent({ recipe: recipeId, user: userId, date })
+    return await event.save()
+  } else {
+    console.log(`trackLikeEvent: can't like event: ${cntMatch}`)
+    return LikeEvent({ recipe: recipeId, user: userId, date })
+  }
 }
 
 export async function getTotalLikes(recipeId) {
+  console.log('getTotalLikes')
   return {
     likes: await LikeEvent.countDocuments({ recipe: recipeId }),
   }
@@ -21,6 +33,7 @@ export async function getTotalLikes(recipeId) {
 
 //get total number of likes by a user, for a recipe
 export async function getTotalLikesForRecipeByUser(recipeId, userId) {
+  console.log('getTotalLikesForRecipeByUser')
   return {
     likes: await LikeEvent.countDocuments({ recipe: recipeId, user: userId }),
   }

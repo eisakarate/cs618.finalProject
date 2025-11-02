@@ -1,9 +1,10 @@
 import { RecipeList } from '../components/recipeList.jsx'
+import { TopRecipes } from '../components/toprecipes.jsx'
 import { RecipeFilter } from '../components/recipeFilter.jsx'
 import { RecipeSorting } from '../components/recipeSorting.jsx'
 
 import { useQuery } from '@tanstack/react-query'
-import { getRecipes } from '../api/recipes.js'
+import { getRecipes, top3Recipes } from '../api/recipes.js'
 
 import { Header } from '../components/header.jsx'
 
@@ -31,13 +32,24 @@ export function RecipeRoot() {
   })
 
   //get data
-  const recipesData = recipeQuery.data ?? [] //get the result
+  const recipesData = recipeQuery.data ?? [] //get the result'
 
-  //console.log(`Result is: ${JSON.stringify(recipesData)}`)
+  //get top 3 data
+  const topsQuery = useQuery({
+    queryKey: ['top3Recipes', 'foofoo'],
+    queryFn: () => top3Recipes(),
+  })
+
+  const topData = topsQuery.data ?? []
+
+  // console.log(`recipeQuery = Result is: ${JSON.stringify(recipeQuery)}`)
+  console.log(`Top 3 = Result is - just the data: ${JSON.stringify(topData)}`)
 
   return (
     <div style={{ padding: 8 }}>
       <Header />
+      <hr />
+      <TopRecipes tops={topData} />
       <hr />
       <Container>
         {/* set the value to the current state (author) and set the onChange event to set the author value*/}
@@ -53,7 +65,7 @@ export function RecipeRoot() {
             onChange={(value) => setAuthor(value)}
           />
           <RecipeSorting
-            fields={['createdAt', 'updatedAt']}
+            fields={['createdAt', 'updatedAt', 'Like Counts']}
             value={sortBy}
             onChange={(value) => setSortBy(value)}
             orderValue={sortOrder}
