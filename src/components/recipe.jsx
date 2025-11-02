@@ -41,7 +41,7 @@ export function Recipe({
       sub = jwtDecode(token) //get the user-id, then nullify the token, then stay on the page
 
       canEdit = token != null && sub != null && sub.sub == userId
-      console.log(`Got Sub: ${sub.sub} - canEdit: ${canEdit}`)
+      //console.log(`Got Sub: ${sub.sub} - canEdit: ${canEdit}`)
     } catch (err) {
       console.log(err)
     }

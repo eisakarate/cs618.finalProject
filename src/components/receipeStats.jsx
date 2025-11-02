@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 
 //add authentication componenets
@@ -10,6 +10,7 @@ import { Row, Col, Container, InputGroup, Badge } from 'react-bootstrap'
 import { getTotalLikes, recipeTrackEvent } from '../api/events'
 
 export function RecipeStats({ recipeId }) {
+  const queryClient = useQueryClient()
   const [token] = useAuth() //get the token, if its there
   const [setSession] = useState() //keep track when a user opens a page, this will start a interaction session
 
@@ -20,8 +21,6 @@ export function RecipeStats({ recipeId }) {
     try {
       sub = jwtDecode(token) //get the user-id, then nullify the token, then stay on the page
 
-      console.log(`User Id: ${sub.sub}`)
-
       canLike = token != null && sub != null
       if (canLike) userId = sub.sub
       //console.log(`Got Sub: ${sub.sub} - canEdit: ${canLike}`)
@@ -29,11 +28,24 @@ export function RecipeStats({ recipeId }) {
       console.log(err)
     }
   }
+  //run the query to get Total likes
+  const totalLikes = useQuery({
+    queryKey: ['totalLikes', recipeId],
+    queryFn: () => getTotalLikes(recipeId),
+  })
 
   //define mutation to register LIKE action
   const trackLikeMutation = useMutation({
-    mutationFn: () => recipeTrackEvent({ recipeId, userId }),
-    onSuccess: (data) => setSession(data?.session),
+    mutationFn: () => {
+      console.log('Updates the count')
+      recipeTrackEvent({ recipeId, userId })
+    },
+    onSettled: (data) => {
+      console.log(`refresh the count for: ${recipeId}`)
+      //invalidate the query
+      queryClient.invalidateQueries({ queryKey: ['totalLikes', recipeId] })
+      setSession(data?.session)
+    },
   })
   //define a function to submit
   const handleLike = (e) => {
@@ -43,13 +55,6 @@ export function RecipeStats({ recipeId }) {
     //push to the database
     trackLikeMutation.mutate() //mutate
   }
-
-  //run the query to get Total likes
-  const totalLikes = useQuery({
-    queryKey: ['totalLikes', recipeId],
-    queryFn: () => getTotalLikes(recipeId),
-  })
-
   //check if the query is loading
   if (totalLikes.isError) {
     return <div>Error: {totalLikes.error.message}</div>
