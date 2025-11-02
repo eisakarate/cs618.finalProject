@@ -29,9 +29,16 @@ export function RecipeStats({ recipeId }) {
     }
   }
   //run the query to get Total likes
-  const totalLikes = useQuery({
+  const {
+    data: totalLikesCount,
+    totalLikesIsLoading,
+    totalLikesIsError,
+  } = useQuery({
     queryKey: ['totalLikes', recipeId],
-    queryFn: () => getTotalLikes(recipeId),
+    queryFn: () => {
+      console.log('calling count query')
+      return getTotalLikes(recipeId)
+    },
   })
 
   //define mutation to register LIKE action
@@ -40,11 +47,19 @@ export function RecipeStats({ recipeId }) {
       console.log('Updates the count')
       recipeTrackEvent({ recipeId, userId })
     },
-    onSettled: (data) => {
-      console.log(`refresh the count for: ${recipeId}`)
-      //invalidate the query
-      queryClient.invalidateQueries({ queryKey: ['totalLikes', recipeId] })
-      setSession(data?.session)
+    onSettled: async (data) => {
+      // <-- Make onSettled async
+      console.log(`refresh the count for: ${recipeId}. Awaiting refetch...`)
+      // AWAIT the invalidation/refetch to complete
+      await queryClient.invalidateQueries({
+        queryKey: ['totalLikes', recipeId],
+      })
+      //['top3Recipes', 'foofoo'],
+      await queryClient.invalidateQueries({
+        queryKey: ['top3Recipes', 'foofoo'],
+      })
+      setSession(data?.session) // This might need adjustment based on what 'data' is
+      console.log('Refetch complete, UI should update now.')
     },
   })
   //define a function to submit
@@ -56,11 +71,11 @@ export function RecipeStats({ recipeId }) {
     trackLikeMutation.mutate() //mutate
   }
   //check if the query is loading
-  if (totalLikes.isError) {
-    return <div>Error: {totalLikes.error.message}</div>
+  if (totalLikesIsError) {
+    return <div>Error: getting like counts</div>
   }
 
-  if (totalLikes.isLoading) {
+  if (totalLikesIsLoading) {
     return (
       <div>
         <b>loading stats..</b>
@@ -74,7 +89,7 @@ export function RecipeStats({ recipeId }) {
         <Row>
           <Col>
             <InputGroup>
-              <Badge bg='secondary'>{totalLikes.data?.likes} Total likes</Badge>
+              <Badge bg='secondary'>{totalLikesCount?.likes} Total likes</Badge>
               {canLike && (
                 <button
                   type='submit'

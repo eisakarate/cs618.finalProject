@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { updateRecipe } from '../api/recipes.js'
+import { RecipeStats } from './receipeStats.jsx'
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getRecipes } from '../api/recipes.js'
@@ -168,6 +169,13 @@ export function EditRecipe() {
                   </>
                 ) : null}
               </form>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <div>
+                <RecipeStats recipeId={__id}></RecipeStats>
+              </div>
             </Col>
           </Row>
         </Container>

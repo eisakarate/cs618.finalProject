@@ -13,7 +13,6 @@ export async function trackLikeEvent({
     user: userId,
   })
   console.log(`trackLikeEvent Precheck: ${cntMatch}`)
-
   if (cntMatch < 1) {
     console.log('trackLikeEvent: Liking event')
     const event = new LikeEvent({ recipe: recipeId, user: userId, date })
