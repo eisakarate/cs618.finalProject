@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { getUserInfo } from '../api/users.js'
 
 export function User({ id }) {
-  console.log(`Setting up User: ${id}`)
   //useQuery -> call the API
   const userInfoQuery = useQuery({
     queryKey: ['users', id],

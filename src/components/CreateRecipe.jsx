@@ -44,7 +44,7 @@ export function CreateRecipe() {
       queryClient.invalidateQueries(['recipes'])
 
       //send added message
-      socket.emit('recipe.added', d._id)
+      socket.emit('recipe.added', { id: d._id, title: d.title })
     },
   })
 

@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types'
 
 import { useRecipe } from '../hooks/useRecipe'
+import { useState, useEffect } from 'react'
 
 import { Link } from 'react-router-dom' //
+
+import { Modal, ModalBody, Button } from 'react-bootstrap'
 
 export function RecipeAddedNotice() {
   const { recipeIds } = useRecipe()
@@ -17,17 +20,36 @@ export function RecipeAddedNotice() {
   const generateGoToRecipeURL = (rId) => {
     return `/view?id=${rId}`
   }
-
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  useEffect(() => {
+    if (lastRecipe) {
+      setShow(true) // Automatically show the modal when a new recipe is available
+    }
+  }, [lastRecipe]) // This effect runs every time lastRecipe changes
   return (
     <div>
       {lastRecipe ? (
-        <div>
-          <b>
-            Recipe Added: {lastRecipe.title}
-            <Link to={generateGoToRecipeURL(lastRecipe.recipeId)}>
-              Go to it!
-            </Link>
-          </b>
+        <div
+          className='modal show'
+          style={{ display: 'block', position: 'initial' }}
+        >
+          <Modal show={show} onHide={handleClose} animation={false}>
+            <Modal.Header closeButton>
+              <Modal.Title>New Recipe Added!</Modal.Title>
+            </Modal.Header>
+            <ModalBody>
+              Recipe Added: {lastRecipe.recipeId.title} <br />
+              <Link to={generateGoToRecipeURL(lastRecipe.recipeId.id)}>
+                Click Go see it!
+              </Link>
+            </ModalBody>
+            <Modal.Footer>
+              <Button variant='primary' onClick={handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       ) : (
         //do nothing
