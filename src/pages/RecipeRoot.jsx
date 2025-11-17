@@ -2,6 +2,10 @@ import { RecipeList } from '../components/recipeList.jsx'
 import { TopRecipes } from '../components/toprecipes.jsx'
 import { RecipeFilter } from '../components/recipeFilter.jsx'
 import { RecipeSorting } from '../components/recipeSorting.jsx'
+import { RecipeStatus } from '../components/RecipeStatus.jsx'
+
+//import { useIsFetching } from '@tanstack/react-query'
+import { RecipeAddedNotice } from '../components/RecipeAddedNotice.jsx'
 
 import { useQuery } from '@tanstack/react-query'
 import { getRecipes, top3Recipes } from '../api/recipes.js'
@@ -14,8 +18,11 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import { useAuth } from '../contexts/AuthContext'
+import { useSocket } from '../contexts/SocketIOContext.jsx'
 
 export function RecipeRoot() {
+  const { status } = useSocket()
+
   const [token] = useAuth() //get the token, if its there
 
   //add states
@@ -48,6 +55,9 @@ export function RecipeRoot() {
   return (
     <div style={{ padding: 8 }}>
       <Header />
+      <hr />
+      <RecipeStatus />
+      {status === 'connected' && <RecipeAddedNotice />}
       <hr />
       <TopRecipes tops={topData} />
       <hr />

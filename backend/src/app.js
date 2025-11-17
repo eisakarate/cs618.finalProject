@@ -12,6 +12,11 @@ import bodyParser from 'body-parser'
 
 import cors from 'cors'
 
+//add socket
+import { createServer } from 'node:http'
+import { Server } from 'socket.io'
+import { handleSocket } from './socket.js'
+
 const app = express()
 
 //make the app use the body parser to parse JSON
@@ -25,6 +30,16 @@ recipesRouts(app)
 userRoutes(app)
 eventRoutes(app)
 
+//create new server (module.12)
+//take the app and wrap a socket-layer around it
+const server = createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+})
+handleSocket(io)
+
 //define a route (root)
 app.get('/', (req, res) => {
   res.send('hello from express, tests, nodemon running')
@@ -36,4 +51,4 @@ app.get('/recipes', (req, res) => {
 })
 
 //make it public
-export { app }
+export { server as app }

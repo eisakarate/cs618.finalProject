@@ -6,12 +6,27 @@ import { AuthContextProvider } from './contexts/AuthContext.jsx'
 
 import { RecipeEdit } from './pages/RecipeEdit.jsx'
 
+import { SocketIOContextProvider } from './contexts/SocketIOContext.jsx'
+
 //import router
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 //bootstrrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { RecipeCreate } from './pages/RecipeCreate.jsx'
+
+// //socket
+// const socket = io(import.meta.env.VITE_SOCKET_HOST)
+// socket.on('connect', () => {
+//   console.log('connected to socket.io as', socket.id)
+//   socket.emit('recipe.added', 'Recipe Added')
+// })
+// socket.on('connect_error', (err) => {
+//   console.error('socket.io connect error:', err)
+// })
+// socket.on('recipe.added', (msg)=>{
+//   console.log(`${msg.username}: ${msg.message}`)
+// })
 
 // create a query client
 const queryClient = new QueryClient()
@@ -47,7 +62,9 @@ export function App() {
     //call router provider instead of the <blog/> component directly
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <RouterProvider router={router} />
+        <SocketIOContextProvider>
+          <RouterProvider router={router} />
+        </SocketIOContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   )

@@ -5,6 +5,8 @@ import { useAuth } from '../contexts/AuthContext'
 import { jwtDecode } from 'jwt-decode'
 import { User } from './User.jsx'
 
+import { useSocket } from '../contexts/SocketIOContext.jsx'
+
 import {
   Container,
   FormControl,
@@ -21,6 +23,9 @@ export function CreateRecipe() {
   //define authentication state
   const [token] = useAuth() //get the token, if its there
 
+  //get socket
+  const { socket } = useSocket()
+
   //define states
   const [title, setTitle] = useState('') //setTitle is an "alias" to "function" that set the state value for title
   const [description, setDescription] = useState('')
@@ -34,7 +39,13 @@ export function CreateRecipe() {
 
     //invalidate the query in the "recipes"
     //invalidating the Query makes the underlying data "invalid", and causes the component to requery from the database
-    onSuccess: () => queryClient.invalidateQueries(['recipes']),
+    onSuccess: (d) => {
+      console.log(`Created new recipe: ${JSON.stringify(d)}`)
+      queryClient.invalidateQueries(['recipes'])
+
+      //send added message
+      socket.emit('recipe.added', d._id)
+    },
   })
 
   //define a function to submit

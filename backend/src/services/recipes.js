@@ -23,7 +23,9 @@ export async function createRecipe(
     ingredientsList,
     imageUrl,
   })
-  return await recipe.save()
+  const createdRecipe = await recipe.save()
+
+  return createdRecipe
 }
 
 //list the top 3 recipes
