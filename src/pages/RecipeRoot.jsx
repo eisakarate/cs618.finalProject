@@ -2,7 +2,7 @@ import { RecipeList } from '../components/recipeList.jsx'
 import { TopRecipes } from '../components/toprecipes.jsx'
 import { RecipeFilter } from '../components/recipeFilter.jsx'
 import { RecipeSorting } from '../components/recipeSorting.jsx'
-import { RecipeStatus } from '../components/RecipeStatus.jsx'
+//import { RecipeStatus } from '../components/RecipeStatus.jsx'
 
 //import { useIsFetching } from '@tanstack/react-query'
 import { RecipeAddedNotice } from '../components/RecipeAddedNotice.jsx'
@@ -55,8 +55,8 @@ export function RecipeRoot() {
   return (
     <div style={{ padding: 8 }}>
       <Header />
-      <hr />
-      <RecipeStatus />
+      {/* <hr /> */}
+      {/* <RecipeStatus /> */}
       {status === 'connected' && <RecipeAddedNotice />}
       <hr />
       <TopRecipes tops={topData} />

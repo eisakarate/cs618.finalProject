@@ -15,7 +15,7 @@ export function RecipeAddedNotice() {
 
   //generate URI to the recipe
   const generateGoToRecipeURL = (rId) => {
-    return `/edit?id=${rId}`
+    return `/view?id=${rId}`
   }
 
   return (
@@ -23,7 +23,7 @@ export function RecipeAddedNotice() {
       {lastRecipe ? (
         <div>
           <b>
-            Recipe Added: {lastRecipe.recipeId}
+            Recipe Added: {lastRecipe.title}
             <Link to={generateGoToRecipeURL(lastRecipe.recipeId)}>
               Go to it!
             </Link>

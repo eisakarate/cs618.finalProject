@@ -5,6 +5,7 @@ import { Login } from './pages/login.jsx'
 import { AuthContextProvider } from './contexts/AuthContext.jsx'
 
 import { RecipeEdit } from './pages/RecipeEdit.jsx'
+import { RecipeView } from './pages/RecipeView.jsx'
 
 import { SocketIOContextProvider } from './contexts/SocketIOContext.jsx'
 
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: `/login`, //set the route
     element: <Login />, //display the signup page
+  },
+  {
+    path: `/View/:id?`,
+    element: <RecipeView />,
   },
 ])
 
